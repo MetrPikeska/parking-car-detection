@@ -29,10 +29,14 @@ Then run:
 
 - `python car_detect.py`
 
+If you are using the provided venv:
+
+- `/home/petr-mikeska/projects/parking-car-detection/venv/bin/python car_detect.py`
+
 ## Notes for headless servers
 
 The script is configured to run without any GUI display. It processes frames and performs detection only.
 
 ## Output
 
-Currently the script draws bounding boxes internally but does not display or save output. If you want to save results, add video writer or logging.
+The script writes an annotated video to `output.mp4` in the project root.

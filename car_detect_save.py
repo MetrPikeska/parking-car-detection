@@ -17,6 +17,12 @@ fps = cap.get(cv2.CAP_PROP_FPS)             #ziskani fps z videa
 if not fps or fps <= 1e-2:                  #osetreni pripadu, kdy fps neni dostupne
     fps = 30.0                              #predpokladana hodnota fps
 
+width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+output_path = '/home/petr-mikeska/projects/parking-car-detection/output.mp4'
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+video_writer = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+
 start_playback = time.time()                #cas, kdy zacalo prehravani videa
 frame_idx = 0
 
@@ -38,6 +44,9 @@ while cap.isOpened():                       #hlavni smycka pro cteni a zpracovan
                 cv2.putText(frame, "person", (x1, y1-5),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,255,0), 2)
 
+    if video_writer is not None:
+        video_writer.write(frame)
+
     cv2.imshow("Detekce aut", frame)
 
     frame_idx += 1  
@@ -47,7 +56,12 @@ while cap.isOpened():                       #hlavni smycka pro cteni a zpracovan
         time.sleep(sleep_time)
 
     if cv2.waitKey(1) & 0xFF == 27:  # ESC
+        
         break
 
+
+
 cap.release()
+if video_writer is not None:
+    video_writer.release()
 cv2.destroyAllWindows()

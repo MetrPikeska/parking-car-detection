@@ -11,8 +11,6 @@ print(f"Video otevreno: {video_path}")
 if not cap.isOpened():
     raise FileNotFoundError(f"Nelze otevřít video: {video_path}")
 
-cv2.namedWindow("Detekce aut", cv2.WINDOW_NORMAL)
-
 fps = cap.get(cv2.CAP_PROP_FPS)
 if not fps or fps <= 1e-2:
     fps = 30.0
@@ -38,17 +36,10 @@ while cap.isOpened():
                 cv2.putText(frame, "person", (x1, y1-5),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,255,0), 2)
 
-    cv2.imshow("Detekce aut", frame)
-
     frame_idx += 1  
     target_time = start_playback + (frame_idx / fps)
     sleep_time = target_time - time.time()
     if sleep_time > 0:
         time.sleep(sleep_time)
 
-    if cv2.waitKey(1) & 0xFF == 27:  # ESC
-        
-        break
-
 cap.release()
-cv2.destroyAllWindows()

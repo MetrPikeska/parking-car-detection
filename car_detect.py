@@ -3,7 +3,7 @@ import cv2
 
 model = YOLO('yolov8n.pt')
 
-video_path = 'input_video.mp4'
+video_path = '/home/petr-mikeska/projects/parking-car-detection/opalena.mp4'
 cap = cv2.VideoCapture(video_path) #vytvori capture objekt z videa "ctecka videa" 
 
 while cap.isOpened():
